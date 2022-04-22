@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 public class Model {
-	private static int 	NUM_PITS = 14;
+	private static int 	NUM_PITS = 14; //hi
 	
 	private HashMap<String, Integer> mancalaPits;	// <name of pit, number of stones in the pit>
 	private String					lastKey;		// remembers the last key whose value was changed
