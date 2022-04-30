@@ -6,10 +6,11 @@ import javax.swing.event.ChangeListener;
 public class Model {
 	private static int 	NUM_PITS = 14;
 	
-	private HashMap<String, Integer> mancalaPits;	// <name of pit, number of stones in the pit>
-	private String					lastKey;		// remembers the last key whose value was changed
-	private int 					previousValue;	// remembers the last value of lastKey before value was changed
-	private ArrayList<ChangeListener> listeners;
+	private HashMap<String, Integer> 	mancalaPits;	// <name of pit, number of stones in the pit>
+	private String						lastKey;		// remembers the last key whose value was changed
+	private int 						previousValue;	// remembers the last value of lastKey before value was changed
+	private ArrayList<ChangeListener> 	listeners;
+	private String 						currentPlayer;
 	
 	/** 
 	 * Constructor initializes the data model with the correct amount of stones in each pit.
@@ -26,7 +27,7 @@ public class Model {
 		mancalaPits.put("A4", numStones);
 		mancalaPits.put("A5", numStones);
 		mancalaPits.put("A6", numStones);
-		mancalaPits.put("MA", 0);
+		mancalaPits.put("AM", 0);
 		mancalaPits.put("B1", numStones);
 		mancalaPits.put("B2", numStones);
 		mancalaPits.put("B3", numStones);
@@ -34,7 +35,7 @@ public class Model {
 		mancalaPits.put("B5", numStones);
 		mancalaPits.put("B6", numStones);
 		mancalaPits.put("BM", 0);
-		
+		currentPlayer = "A";
 		listeners = new ArrayList<ChangeListener>();
 		System.out.println("Successfully initialized with " + numStones + " stones.");
 	}
@@ -50,7 +51,22 @@ public class Model {
 	public boolean incPit(String key) {
 		if(mancalaPits.containsKey(key)) {
 			mancalaPits.replace(key, mancalaPits.get(key) + 1);
-			update();
+			return true;
+		}
+		return false;
+	}
+	
+	/** 
+	 * Add method that finds key and increments its value by the given amount
+	 * 
+	 * Usage: User clicks on a pit and subsequent pits are given one extra stone
+	 * 
+	 * @param key	name of key
+	 * @return		if key is successfully incremented, return true. otherwise false
+	 */
+	public boolean incPit(String key, int amount) {
+		if(mancalaPits.containsKey(key)) {
+			mancalaPits.replace(key, mancalaPits.get(key) + amount);
 			return true;
 		}
 		return false;
@@ -67,7 +83,6 @@ public class Model {
 	public boolean decPit(String key) {
 		if(mancalaPits.containsKey(key)) {
 			mancalaPits.replace(key, mancalaPits.get(key) - 1);
-			update();
 			return true;
 		}
 		return false;
@@ -76,7 +91,6 @@ public class Model {
 	public boolean reversePit(String key) {
 		if(key == lastKey) {
 			mancalaPits.replace(key, previousValue);
-			update();
 			return true;
 		}
 		return false;
@@ -91,7 +105,6 @@ public class Model {
 		if(mancalaPits.containsKey(key)) {
 			lastKey = key;
 			previousValue = mancalaPits.replace(key, 0);
-			update();
 			return true;
 		}
 		return false;
@@ -129,13 +142,33 @@ public class Model {
 	}
 	
 	/**
-	 * Helper method that notifies attached listeners of any changes done to the model.
+	 * Notifies attached listeners of any changes done to the model.
 	 */
-	private void update() {
+	public void update() {
 		ChangeEvent e = new ChangeEvent(this);
 		for(ChangeListener l : listeners) {
 			l.stateChanged(e);
 		}
 	
+	}
+	
+	/**
+	 * Swaps the current player
+	 */
+	public void changePlayer() {
+		if(currentPlayer.equals("A")) {
+			currentPlayer = "B";
+		}
+		else {
+			currentPlayer = "A";
+		}
+	}
+	
+	public HashMap<String, Integer> getMancalaPits() {
+		return mancalaPits;
+	}
+	
+	public String getPlayer() {
+		return currentPlayer;
 	}
 }

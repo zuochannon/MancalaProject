@@ -8,7 +8,8 @@ public class MancalaTester {
 		JFrame frame = new JFrame(); // borderlayout is default
         
 		Controller c = new Controller(frame);
-		frame.add(c.startScreen());
+		frame.add(Controller.startScreen());
+		
 		
 		frame.setPreferredSize(new Dimension(500,500));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
