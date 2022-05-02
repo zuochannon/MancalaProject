@@ -1,21 +1,26 @@
 import javax.swing.*;
+import java.awt.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class View implements ChangeListener{
 	private Model data;
-	private JFrame frame;
+	private JPanel panel;
 	
-	public View(Model m, JFrame f) {
+	public View(Model m, JPanel p) {
 		data = m;
-		frame = f;
+		panel = p;
 	}
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		frame.removeAll();
-		frame.add(Controller.test());
-		frame.repaint();
-		
+		JPanel nextCard = new JPanel();
+		Pit p = new Pit(data);
+		for(String key : Controller.getPitKeys()) {
+			nextCard.add(p.createMancalaPit(key));
+		}
+		panel.add(nextCard);
+		CardLayout cl = (CardLayout) panel.getLayout();
+		cl.next(panel);
 	}
 
 }
