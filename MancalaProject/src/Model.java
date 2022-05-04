@@ -7,9 +7,8 @@ public class Model {
 	private static int 	NUM_PITS = 14;
 	
 	private HashMap<String, Integer> 	mancalaPits;	// <name of pit, number of stones in the pit>
-	private String						lastKey;		// remembers the last key whose value was changed
-	private int 						previousValue;	// remembers the last value of lastKey before value was changed
-	private ArrayList<ChangeListener> 	listeners;
+	private HashMap<String, Integer>    previousState;  //remembers the previous values of the mancalaPits
+	private ArrayList<ChangeListener> 	listeners;		
 	private String 						currentPlayer;
 	
 	/** 
@@ -88,12 +87,13 @@ public class Model {
 		return false;
 	}
 	
-	public boolean reversePit(String key) {
-		if(key == lastKey) {
-			mancalaPits.replace(key, previousValue);
-			return true;
-		}
-		return false;
+	/**
+	 * Undos the last move made by a player
+	 */
+	public void undo() {
+		mancalaPits = previousState;
+		changePlayer();
+		update();
 	}
 	
 	/** 
@@ -103,8 +103,7 @@ public class Model {
 	 */
 	public boolean clearPit(String key) {
 		if(mancalaPits.containsKey(key)) {
-			lastKey = key;
-			previousValue = mancalaPits.replace(key, 0);
+			mancalaPits.replace(key, 0);
 			return true;
 		}
 		return false;
@@ -162,6 +161,68 @@ public class Model {
 		else {
 			currentPlayer = "A";
 		}
+	}
+	
+	/**
+	 * Checks the pits to see if either side is empty, thus signaling a game over
+	 * @return true if pits are empty, false otherwise
+	 */
+	public boolean isGameOver() {
+		ArrayList<String> pitKeys = new ArrayList<String>();
+		for(int i = 1; i < 7; i++) {
+			pitKeys.add("A" + i);
+		}
+		pitKeys.add("AM"); //index 6
+		for(int i = 1; i < 7; i++) {
+			pitKeys.add("B" + i);
+		}
+		pitKeys.add("BM"); //index 13
+		
+		int count = 0;
+		for(int i = 0; i < 6; i++) {
+			count += mancalaPits.get(pitKeys.get(i));
+		}
+		if(count == 0) {
+			return true;
+		}
+		
+		count = 0;
+		for(int i = 7; i < 13 ; i++) {
+			count += mancalaPits.get(pitKeys.get(i));
+		}
+		if(count == 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Compares the players mancalas and determines who has the most stones, therefore winning
+	 * @return player a or b victory string
+	 */
+	public String getWinner() {
+		int aScore = mancalaPits.get("AM");
+		int bScore = mancalaPits.get("BM");
+		
+		if(aScore > bScore) {
+			return "The winner is Player A";
+		}
+		else {
+			return "The winner is Player B";
+		}
+	}
+	
+	/**
+	 * Copys the current state of the pits and stores it in the previous state instance variable.
+	 */
+	public void saveState() {
+		previousState = new HashMap<String, Integer>();
+		for (Map.Entry<String, Integer> entry : mancalaPits.entrySet())
+	    {
+	        previousState.put(entry.getKey(), entry.getValue());
+	         
+	    }
 	}
 	
 	public HashMap<String, Integer> getMancalaPits() {
