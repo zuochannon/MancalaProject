@@ -38,17 +38,17 @@ public class Controller { //
 		String[] styles = new String[] {"Style 1", "Style 2" };
 		JComboBox<String> option = new JComboBox<String>(styles);
 		
-		JButton button4 = new JButton("4 Stones");
+		JButton button4 = new JButton("3 Stones");
 		button4.addActionListener(l -> { 
-			data = new Model(4); 
+			data = new Model(3); 
 			View v = new View(data, panel, option.getSelectedItem().toString());
 			data.attach(v);
 			data.update();
 			});
 		
-		JButton button5 = new JButton("5 Stones");
+		JButton button5 = new JButton("4 Stones");
 		button5.addActionListener(l -> { 
-			data = new Model(5);
+			data = new Model(4);
 			View v = new View(data, panel, option.getSelectedItem().toString());
 			data.attach(v);
 			data.update();
@@ -64,7 +64,10 @@ public class Controller { //
 	}
 	
 	public static JButton undoButton() {
-		JButton button = new JButton("Undo");
+		JButton button = new JButton("Undos left: " + data.getRemainingUndos());
+		if(data.hasUsedUndo()) {
+			button.setEnabled(false);
+		}
 		button.addActionListener(( l -> {
 			data.undo();
 		}));

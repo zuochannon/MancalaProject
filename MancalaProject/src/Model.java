@@ -10,6 +10,8 @@ public class Model {
 	private HashMap<String, Integer>    previousState;  //remembers the previous values of the mancalaPits
 	private ArrayList<ChangeListener> 	listeners;		
 	private String 						currentPlayer;
+	private int 						remainingUndos;
+	private boolean						usedUndo;
 	
 	/** 
 	 * Constructor initializes the data model with the correct amount of stones in each pit.
@@ -36,7 +38,7 @@ public class Model {
 		mancalaPits.put("BM", 0);
 		currentPlayer = "A";
 		listeners = new ArrayList<ChangeListener>();
-		System.out.println("Successfully initialized with " + numStones + " stones.");
+		remainingUndos = 3;
 	}
 	
 	/** 
@@ -91,9 +93,17 @@ public class Model {
 	 * Undos the last move made by a player
 	 */
 	public void undo() {
-		mancalaPits = previousState;
-		changePlayer();
-		update();
+		if(previousState == null ) {
+			//wont undo on first turn
+		}
+		if(remainingUndos > 0) {
+			remainingUndos--;
+			usedUndo = true;
+			mancalaPits = previousState;
+			changePlayer();
+			update();
+		}
+		
 	}
 	
 	/** 
@@ -231,5 +241,21 @@ public class Model {
 	
 	public String getPlayer() {
 		return currentPlayer;
+	}
+	
+	public boolean hasUsedUndo() {
+		return usedUndo;
+	}
+	
+	public void setUsedUndo(boolean b) {
+		usedUndo = b;
+	}
+	
+	public void restoreUndoCount() {
+		remainingUndos = 3;
+	}
+	
+	public int getRemainingUndos() {
+		return remainingUndos;
 	}
 }

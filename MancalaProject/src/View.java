@@ -64,7 +64,7 @@ public class View implements ChangeListener{
 			}
 			c.gridx = 0;
 			c.gridy = 2;
-			c.gridwidth = 2;
+			c.gridwidth = 3;
 			nextCard.add(Controller.undoButton(), c);
 			panel.add(nextCard);
 		}
