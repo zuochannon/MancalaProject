@@ -8,6 +8,11 @@ public class Pit {
 	private ArrayList<String> pitKeys;
 	private StyleStrategy strat;
 	
+	/**
+	 * Constructor
+	 * @param data
+	 * @param s
+	 */
 	public Pit(Model data, StyleStrategy s) {
 		this.data = data;
 		strat = s;
@@ -23,9 +28,15 @@ public class Pit {
 		
 	}
 	
+	/**
+	 * Creates a mancala pit, with necessary game logic implemented
+	 * @param key = pit to be created
+	 * @return jbutton representing mancala pit
+	 */
 	public JButton createMancalaPit(String key) {
 		ImageIcon icon = strat.getImage(data.getMancalaPits().get(key));
 		JButton button = new JButton(key, icon); 
+		
 		//removing background of jbuttons
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
@@ -105,6 +116,10 @@ public class Pit {
 		return button;
 	}
 	
+	/**
+	 * Helper method to easily get opponent's side
+	 * @return opponent's side
+	 */
 	private String getOpponentSide() {
 		String currentPlayer = data.getPlayer();
 		if(currentPlayer.equals("A")) {

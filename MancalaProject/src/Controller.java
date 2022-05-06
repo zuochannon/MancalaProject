@@ -31,7 +31,7 @@ public class Controller { //
 	}
 	
 	/**
-	 *
+	 * Displays the starting screen, which allows user to select style and starting stones.
 	 */
 	public void startScreen() {
 		JPanel p = new JPanel();
@@ -65,6 +65,10 @@ public class Controller { //
 		panel.add(p, "StartScreen");
 	}
 	
+	/**
+	 * Creates the undo button
+	 * @return undo button
+	 */
 	public static JButton undoButton() {
 		JButton button = new JButton("Undos left: " + data.getRemainingUndos());
 		if(data.hasUsedUndo()) {
@@ -75,6 +79,10 @@ public class Controller { //
 		}));
 		return button;
 	}
+	/**
+	 * Gets the arraylist of pitkeys
+	 * @return pitkeys
+	 */
 	public static ArrayList<String> getPitKeys() {
 		return pitKeys;
 	}

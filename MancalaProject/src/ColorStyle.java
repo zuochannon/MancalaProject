@@ -4,6 +4,9 @@ import javax.swing.ImageIcon;
 
 public class ColorStyle implements StyleStrategy {
 	
+	/**
+	 * Method required by StyleStrategy interface
+	 */
 	@Override
 	public ImageIcon getImage(int stones) {
 		ImageIcon pit;

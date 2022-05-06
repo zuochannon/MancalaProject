@@ -1,7 +1,10 @@
 import javax.swing.ImageIcon;
 import java.awt.Image;
 public class MonoStyle implements StyleStrategy {
-
+	
+	/**
+	 * Method required by StyleStrategy interface
+	 */
 	@Override
 	public ImageIcon getImage(int stones) {
 		ImageIcon pit;

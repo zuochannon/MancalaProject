@@ -7,12 +7,20 @@ public class View implements ChangeListener{
 	private Model data;
 	private JPanel panel;
 	private StyleStrategy strat;
-	
+	/**
+	 * Constructor
+	 * @param model
+	 * @param pit
+	 * @param strat
+	 */
 	public View(Model model, JPanel pit, StyleStrategy strat) {
 		data = model;
 		panel = pit;
 		this.strat = strat;
 	}
+	/**
+	 * Method required by changelistener interface
+	 */
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		if(data.isGameOver()) {
