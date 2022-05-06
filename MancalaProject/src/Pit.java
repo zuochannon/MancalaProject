@@ -105,7 +105,7 @@ public class Pit {
 				data.incPit(currentMancala, takenStones);
 			}
 			if ((pitKeys.get(currentIndex).equals("AM") && player.equals("A"))
-					|| (pitKeys.get(currentIndex).equals("BM") && player.equals("BM"))) {
+					|| (pitKeys.get(currentIndex).equals("BM") && player.equals("B"))) {
 				data.update();
 				// player gets another turn
 			} else {
