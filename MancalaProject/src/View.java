@@ -6,12 +6,12 @@ import javax.swing.event.ChangeListener;
 public class View implements ChangeListener{
 	private Model data;
 	private JPanel panel;
-	private String style;
+	private StyleStrategy strat;
 	
-	public View(Model model, JPanel pit, String style) {
+	public View(Model model, JPanel pit, StyleStrategy strat) {
 		data = model;
 		panel = pit;
-		this.style = style;
+		this.strat = strat;
 	}
 	@Override
 	public void stateChanged(ChangeEvent e) {
@@ -23,7 +23,7 @@ public class View implements ChangeListener{
 		}
 		else {
 			JPanel nextCard = new JPanel();
-			Pit pit = new Pit(data);
+			Pit pit = new Pit(data, strat);
 			GridBagLayout g = new GridBagLayout();
 			GridBagConstraints c = new GridBagConstraints();
 			nextCard.setLayout(g);

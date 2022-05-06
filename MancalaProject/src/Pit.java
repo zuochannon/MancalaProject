@@ -1,12 +1,16 @@
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Pit {
 	private Model data;
 	private ArrayList<String> pitKeys;
+	private StyleStrategy strat;
 	
-	public Pit(Model data) {
+	public Pit(Model data, StyleStrategy s) {
 		this.data = data;
+		strat = s;
 		pitKeys = new ArrayList<String>();
 		for(int i = 1; i < 7; i++) {
 			pitKeys.add("A" + i);
@@ -20,8 +24,13 @@ public class Pit {
 	}
 	
 	public JButton createMancalaPit(String key) {
-		//get icon from style strategy?
-		JButton button = new JButton(data.getMancalaPits().get(key) + ""); //add icon here later
+		ImageIcon icon = strat.getImage(data.getMancalaPits().get(key));
+		JButton button = new JButton(key, icon); 
+		//removing background of jbuttons
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		
 		if(!key.substring(0,1).equals(data.getPlayer()) || key.substring(1, 2).equals("M") || data.getMancalaPits().get(key) == 0) {  //button does not belong to current player or button is mancala or mancala has no stones
 			button.setEnabled(false);
 		}

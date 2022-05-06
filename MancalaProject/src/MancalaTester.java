@@ -17,7 +17,7 @@ public class MancalaTester {
 		c.startScreen();
 		
 		
-		frame.setPreferredSize(new Dimension(500,500));
+		frame.setPreferredSize(new Dimension(1200,500));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);

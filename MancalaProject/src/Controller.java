@@ -35,13 +35,14 @@ public class Controller { //
 	 */
 	public void startScreen() {
 		JPanel p = new JPanel();
-		String[] styles = new String[] {"Style 1", "Style 2" };
+		String[] styles = new String[] {"Black and White", "Rainbow" };
 		JComboBox<String> option = new JComboBox<String>(styles);
 		
 		JButton button4 = new JButton("3 Stones");
 		button4.addActionListener(l -> { 
 			data = new Model(3); 
-			View v = new View(data, panel, option.getSelectedItem().toString());
+			StyleStrategy style = new MonoStyle();
+			View v = new View(data, panel, style);
 			data.attach(v);
 			data.update();
 			});
@@ -49,7 +50,8 @@ public class Controller { //
 		JButton button5 = new JButton("4 Stones");
 		button5.addActionListener(l -> { 
 			data = new Model(4);
-			View v = new View(data, panel, option.getSelectedItem().toString());
+			StyleStrategy style = new ColorStyle();
+			View v = new View(data, panel, style);
 			data.attach(v);
 			data.update();
 			});
